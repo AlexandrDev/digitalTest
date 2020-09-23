@@ -10,7 +10,6 @@
     <title>Медтехника</title>
 </head>
 <body>
-    <?php require 'connect.php'; ?>
     <header>
         <div class="header-mobile d-block d-md-none">
             <div class="container d-flex justify-content-between">
@@ -149,7 +148,7 @@
             </div>
             <div class="col-md-9 pr-0 pl-0 pl-md-2">
                 <div class="row m-0">
-                    <?php require 'show.php'; ?>
+                    <?php require 'loading.php'; ?>
                     <div class="load mt-4 w-100">
                         <button type="button" class="load-more">
                             <i class="fas fa-redo-alt"></i><div class="spinner-grow text-primary d-none" style="width: 1rem; height: 1rem;" role="status">
@@ -465,36 +464,37 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="./index.js"></script>
     <script>
-        var count = 3;
         var j = 3;
+
         $('.load-more').click(function() {
             const btn = $(this);
             const loader = btn.find('.spinner-grow ');
             const icon = btn.find('.fa-redo-alt');
+
             btn.attr('disabled', true);
             loader.removeClass('d-none');
             icon.addClass('d-none');
+
             setTimeout(function() {
                 loader.addClass('d-none');
                 btn.attr('disabled', false);
                 icon.removeClass('d-none');
+
                 $.ajax({
                     url: './loading.php',
                     type: 'POST',
                     cache: false,
                     data: {
-                        count: count,
                         j: j
                     },
                     success: function(data) {
                         if(data !== '') {
                             $(".load").before(data);
-                            count += 3;
                             j += 3;
                         }
                     }
                 });
-            }, 1000);
+            }, 200);
         });
       </script>
 </body>
